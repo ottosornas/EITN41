@@ -23,10 +23,10 @@ def MGF1(mgfSeed, maskLen):
 
 def OAEP_encode(M, seed, L=""):
     lHash = sha1(bytearray(L.encode('utf-8'))).hexdigest()
-    PS = "".zfill((k - int(len(M)/2) - 2*hLen) - 2)*2 #why int(len(M)/2)?
+    PS = "".zfill((k - int(len(M)/2) - 2*hLen) - 2)*2 
     DB = lHash + PS + "01" +  M
     dbMask = MGF1(seed, k - hLen - 1)
-    maskedDB = hex(int(DB, 16) ^ int(dbMask, 16))[2:] #why int?
+    maskedDB = hex(int(DB, 16) ^ int(dbMask, 16))[2:]
     seedMask = MGF1(maskedDB, hLen)
     maskedSeed = hex(int(seed, 16) ^ int(seedMask, 16))[2:]
     EM = "00" + maskedSeed + maskedDB
