@@ -1,43 +1,29 @@
-from urllib.request import urlopen
-import ssl
+import requests
 import time
 
+def get_req(url, payload):
+     return requests.get(url, params=payload, verify=False)
 
-def timing_attack(username, grade, url, sig_length):
-    target = "{}name={}&grade={}&signature=".format(url, username, grade)
-    longest = 0.0
-    tempLong = 0.0
+def req_time(url, payload):
+    return get_req(url, payload).elapsed.total_seconds()
+
+def timing_attack(name, grade):
+    url = "https://eitn41.eit.lth.se:3119/ha4/addgrade.php"
     sig = ""
-    wrongSig = 0
-    while len(sig) < sig_length:
-        correct = ""
-        if wrongSig > 2:
-            sig = sig[:-1]
-            wrongSig = 0
-            longest = tempLong
-        
+    payload = {"name": name, "grade": grade, "signature": sig}
+    for i in range(20):
+        highest = 0.0
+        charToAdd = ''
         for x in range(0, 16):
-            temp = hex(x)[2:]
-            print(target + sig + temp)
-            start_time = time.time()
-            urlopen(target + sig + temp, context=context)
-            elapsed = time.time() - start_time
-            
-            print(elapsed)
-            if elapsed > longest + 0.01:
-                tempLong = longest
-                longest = elapsed
-                correct = temp
-        if correct == "":
-            wrongSig += 1
-        else:
-            sig += correct
-    return target + sig
+            char = hex(x)[2:]
+            t_sign = sig + char
+            payload["signature"] = t_sign
+            low = min([req_time(url, payload) for x in range(12)])
+            print("Character: " + char + " time: " + str(low))
+            if low > highest:
+                highest = low
+                charToAdd = char
+        sig = sig + charToAdd
+        print(sig)
 
-
-context = ssl._create_unverified_context()
-url = timing_attack("Kalle", 5, "https://eitn41.eit.lth.se:3119/ha4/addgrade.php?", 20)
-test = urlopen(url, context=context)
-print(url)
-print(test.read())
-#6823ea50b133c58cba36
+timing_attack("Kalle", 5)

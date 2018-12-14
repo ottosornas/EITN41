@@ -49,11 +49,11 @@ def OAEP_decode(EM):
         return "Decryption error"
     return M
 print("\t\t MGF1 TEST\n")
-print(MGF1("9b4bdfb2c796f1c16d0c0772a5848b67457e87891dbc8214", 21) + "\n =============================================")
+print(MGF1("d9918d2cd546940c8b3beccd09c5e1d58c72b4998c7f52a5f267", 26) + "\n =============================================")
 print("\t\t ENCODED MESSAGE \n")
-print(OAEP_encode("c107782954829b34dc531c14b40e9ea482578f988b719497aa0687", "1e652ec152d0bfcd65190ffc604c0933d0423381"))
+print(OAEP_encode("c4254022d53ed188e5156b41397bef79ae81f26e0af26810", "117d55ae86212ef0c5baca99c2a208d275c6ff00"))
 print("============================================= \n \t \t DECODED MESSAGE \n")
-print(OAEP_decode("0063b462be5e84d382c86eb6725f70e59cd12c0060f9d3778a18b7aa067f90b2" +
-"178406fa1e1bf77f03f86629dd5607d11b9961707736c2d16e7c668b367890bc" +
-"6ef1745396404ba7832b1cdfb0388ef601947fc0aff1fd2dcd279dabde9b10bf" + 
-"c51efc06d40d25f96bd0f4c5d88f32c7d33dbc20f8a528b77f0c16a7b4dcdd8f"))
+print(OAEP_decode("00b2f73d91326091417ed768c1bab03bdf7d32cb15d2345866989457444e4884" +
+"695e81d6241ec8130c631733247498de28d4b5acfa50496127730f60b29cfad2" +
+"157ca073fc373e40305f7eaeadcd30a7d591185f84876ca9e9d417f8441127df" + 
+"b137ff4faf8437bd955e5dc03ed9094e6ea8429fa67e15173c42b2839afbd156"))
